@@ -7,43 +7,17 @@
 const Property = use('App/Models/Property')
 
 class PropertyController {
-  /**
-   * Show a list of all properties.
-   * GET properties
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+
+  async index () {
     const properties = Property.all()
 
     return properties
   }
 
-  /**
-   * Render a form to be used for creating a new property.
-   * GET properties/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async store ({ request, response }) {
   }
 
-  /**
-   * Display a single property.
-   * GET properties/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
     const property = await Property.findOrFail(params.id)
 
     await property.load('images')
@@ -51,27 +25,10 @@ class PropertyController {
     return property
   }
 
-  /**
-   * Render a form to update an existing property.
-   * GET properties/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async update ({ params, request, response }) {
   }
 
-  /**
-   * Delete a property with id.
-   * DELETE properties/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, request, response, auth }) {
     const property = await Property.findOrFail(params.id)
 
     if (property.user_id !== auth.user.id) {
